@@ -17,17 +17,11 @@ def get_learner(X, y, type, max_depth=10):
         return DecisionTreeClassifier(max_depth=max_depth).fit(X,y)
     print("unsupported type given", type)
 
-def make_trees(X,y,ntrees=100,max_depth=10, type="regressor", random_forest=False):
+def make_trees(X,y,ntrees=100,max_depth=10, type="regressor"):
     trees = []
     for i in range(ntrees):
         # Your solution here
         x_i, y_i = resample(X, y)
-        
-        #taking a subsample of the features if we're doing a random forest
-        if random_forest:
-            numFeatures = int(np.round_(x_i.shape[1] / 3))
-            x_i = x_i.sample(n = numFeatures, axis="columns")
-
         tree = get_learner(x_i, y_i, type=type)
         trees.append(tree)
     return trees
